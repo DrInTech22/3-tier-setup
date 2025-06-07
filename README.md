@@ -26,13 +26,14 @@ This project will optimize different facets of the project to enhance security, 
 ## Containerizing the application tier
 - use a Dockerfile to create a docker image of the node.js application.
 Hint: In the dockerfile, the steps should copy the dependencies file, install the dependencies and then copy the application files. After that, set the command to start the application using 'npm' or 'node'.
-
+```sh
 docker run  \
   --name web-tier \
   -p 80:80 \
   -v ./nginx.conf:/etc/nginx/conf.d/default.conf
   --network database
   web-tier:latest
+```
 
 ## Containerizing the web tier
 - use a Dockerfile to create a docker image of the frontend react application.
@@ -40,6 +41,7 @@ Hint: In the dockerfile,the steps should copy the dependencies file(package*.jso
 
 
 # Then run it
+```sh
 docker run -d \
   --name api \
   -e DB_PWD=dbpassword \
@@ -58,7 +60,7 @@ docker run \
   -p 4000:4000 \
   --network database \
   app-tier:latest 
-
+```
 ## Setting up the database
 ```sh
 echo "DB_PWD=your_db_password
