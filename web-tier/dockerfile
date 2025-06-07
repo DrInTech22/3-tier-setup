@@ -1,0 +1,25 @@
+# Stage 1: Build React app with compatible Node version
+FROM node:16-alpine AS builder
+
+WORKDIR /app
+
+# Install dependencies first (better caching)
+COPY package*.json ./
+
+RUN npm install 
+
+# Copy source and build
+COPY . .
+
+RUN npm run build
+
+# Stage 2: Serve with NGINX (Lightweight production server)
+FROM nginx:alpine
+
+# Copy built assets from builder stage to NGINX default directory
+COPY --from=builder /app/build /usr/share/nginx/html
+
+# NGINX already exposes port 80 by default in its base image
+EXPOSE 80
+
+# NGINX runs automatically when container starts (no need for explicit CMD)
