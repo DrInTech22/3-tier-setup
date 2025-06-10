@@ -1,0 +1,22 @@
+services:
+  config-demo:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      # ConfigMap-like environment variables
+      APP_CONFIG_DATABASE_HOST: "postgres.example.com"
+      APP_CONFIG_DATABASE_PORT: "5432"
+      APP_CONFIG_LOG_LEVEL: "INFO"
+      APP_CONFIG_FEATURE_FLAG: "enabled"
+      
+      # Secret-like environment variables
+      APP_SECRET_DATABASE_USER: "postgres"
+      APP_SECRET_DATABASE_PASS: "supersecretpass"
+      APP_SECRET_API_KEY: "abcdefghijk"
+      APP_SECRET_JWT_SECRET: "myjwtsecret"
+    
+    volumes:
+      # Mount config files
+      - ./test-configs:/etc/config:ro
+      - ./test-secrets:/etc/secrets:ro
